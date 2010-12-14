@@ -13,10 +13,7 @@ class Location extends Eponym {
 
     private $location; // object from "array"
     private $phone; // int? string? THINK ABOUT IT.
-
     private $name; //string, only if needed.
-    private $location; // object from "array"
-    private $phone; // int? string? THINK ABOUT IT.
 
     function  __construct($ID, $db) {
         parent::__construct($ID, $db);
@@ -32,12 +29,13 @@ class Location extends Eponym {
         }
     }
 
+    public function __get($name) {
+        return $this->location->$name;
+    }
     public function getLocation() { return $this->location; }
     public function getPhone() { return $this->phone; }
 
-    public function getProLoc() {
-        return $this->location->city.', '.$this->location->state;
-    }
+    public function getProLoc() { return $this->location->city.', '.$this->location->state; }
 
 }
 ?>

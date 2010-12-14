@@ -20,7 +20,7 @@ class Experience extends Professional {
 
     public function theTest() {
         echo $this->getName();
-        echo ' '. $this->getProLoc();
+        echo ' '. $this->getProLoc() . ' '. $this->timeframe ;
     }
 }
 ?>
