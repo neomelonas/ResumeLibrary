@@ -13,7 +13,7 @@ class User extends Location{
     
     private $information;
 
-    function  __construct($ID, $db) {
+    public function  __construct($ID, $db) {
         parent::__construct($ID, $db);
         $this->information = (object) array();
 
@@ -23,6 +23,7 @@ class User extends Location{
             $this->information->web = $row->website;
             $this->information->twitter = '@<a href="http://twitter.com/'.$row->twitter.'">'.$row->twitter.'</a>';
         }
+        $this->information->statement = $this->thing;
     }
     public function __get($name) {
         return $this->information->$name;

@@ -19,12 +19,14 @@ class Eponym {
     private $mAn; // bool
     private $type; // bool
     
-    function __construct($ID, $db) {
-        $this->id = $ID;
-        $sql = $db->query('SELECT name, type, mAn FROM '.thistable.' WHERE id='.$ID.' LIMIT 1');
-        while($row=$sql->fetch_object()) { $this->makeName($row->type, $row->name, $row->mAn); }
+    public function __construct($ID, $db) {
+        $sql = $db->query('SELECT id, name, type, mAn FROM '.thistable.' WHERE id='.$ID.' LIMIT 1');
+        while($row=$sql->fetch_object()) { $this->id = $row->id; $this->makeName($row->type, $row->name, $row->mAn); }
     }
-
+    
+    protected function getId() {
+        return $this->id;
+    }
     private function getFirstName() {
         return $this->first;
     }

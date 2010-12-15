@@ -1,3 +1,4 @@
 nbproject/*
 conf/*.php
 tests/*
+sql/*

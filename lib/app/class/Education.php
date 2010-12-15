@@ -13,9 +13,8 @@ class Education extends Professional {
 
     private $degree;
 
-    function  __construct($ID, $db) {
+    public function  __construct($ID, $db) {
         parent::__construct($ID, $db);
         $this->degree = $this->thing;
     }
 }
-?>
