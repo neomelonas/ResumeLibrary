@@ -3,13 +3,15 @@
  * @package ResumeLib
  */
 /**
- * Description of Eponym
+ * Eponym
+ *
+ * This class provides a way to get &/or generate the name of an object.
  *
  * @author neo melonas <neo@neomelonas.com>
  * @version 2010-12-14
  * @since 2010-12-14
  */
-class Eponym {
+class Eponym extends ListPile{
 
     private $id; // int
     private $first; // string

@@ -7,9 +7,28 @@ function autoVer($url){
 }
 
 function __autoload($class) { include_once (__DIR__."/lib/app/class/{$class}.php"); }
+
+
+echo '<pre>';
+
+
 $u = isset($_GET['u']) ? $_GET['u'] : 1;
-$t = new Experience($u, $db);
-$details = $t->getDetails();
+$r = (object) array(
+    'n'=>$n = new User($u, $db),
+    'j'=>$j = new Experience($u, $db),
+    'l'=>$l = new Education($u, $db),
+    'i'=>$i = new Interests($u, $db, 'listly'),
+//    $int = new ListPile()
+);
+print_r($r);
+$details = $r->j->getDetails();
+//$interests = $r->i->getInterests();
+$int = $r->i->makeList($u, $db, 'listly', 'itype=3');
+
+
+echo '</pre>';
+
+
 ?>
 <!doctype html>
 <html>
@@ -20,7 +39,7 @@ $details = $t->getDetails();
     </head>
     <body>
         <?php
-            echo $t->detailsAsList($details);
+            echo $r->i->detailsAsList($int);
         ?>
     </body>
 </html>

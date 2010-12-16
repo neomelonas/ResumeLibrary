@@ -9,55 +9,22 @@
  * @version 2010-12-14
  * @since 2010-12-14
  */
-abstract class Professional extends Location implements ListPile{
+abstract class Professional extends Location {
 
     protected $timeframe;
-
+    /**
+     *
+     * @param int $ID
+     * @param mysqli $db The database connection. Mysqli ONLY, 'cause.
+     */
     public function  __construct($ID, $db) {
         parent::__construct($ID, $db);
-        $sql = $db->query('SELECT start, end FROM '.thistable.' WHERE id='.$ID.' LIMIT 1');
+        $sql = $db->query('SELECT start, end FROM names n INNER JOIN user_pro up ON up.pro_id=n.id WHERE up.user_id='.$ID.' ORDER BY `end`');
         /* @var $start DateTime */
         /* @var $end DateTime */
         while($row=$sql->fetch_object()) { $start = $row->start; $end = $row->end;}
+        $start = ($start == null) ? null : date("F, Y", strtotime($start));
         $end = ($end == null) ? 'Present' : date("F, Y", strtotime($end));
-        $this->timeframe = ($start == null) ? null : date("F, Y", strtotime($start)). ' &#8211; ' .$end;
-    }
-    /**
-     * makeList creates an array of the details for a given reference id.
-     *
-     * Right now, it only works for Professional-subtypes, things with Eponyms.
-     * [Education | Experience ]
-     *
-     * @param int $ID
-     * @param mysqli $db
-     * @param string $table
-     * @return array $items
-     */
-    public function makeList($ID, $db, $table){
-        $items = array();
-        $counter=0;
-        $sql=$db->query('SELECT item, itype FROM `'.$table.'` WHERE refID='.$ID);
-        while($row=$sql->fetch_object()) {
-            $counter++;
-            $items[$counter] = (object) array('item'=>$row->item, 'type'=>$row->itype);
-        }
-        $items[0] = $counter;
-        return $items;
-    }
-    /**
-     * detailsAsList makes an unordered list of the items generated with makeList
-     *
-     * @param array $item
-     * @return string $theOutput Returns the
-     */
-    public function detailsAsList($item){
-        /** @var $theOutput string For holding output. */
-        $theOutput = '<ul>';
-        print_r($item);
-        for ($counter = 1; $counter < $item[0]; $counter++) {
-            $theOutput.= '<li>'.$item[$counter]->item.'</li>';
-        }
-        $theOutput .= '</ul>';
-        return $theOutput;
+        $this->timeframe = ($start != $end) ? $start . ' &#8211; ' .$end : $start;
     }
 }
