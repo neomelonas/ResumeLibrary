@@ -10,13 +10,22 @@
  * @since 2010-12-15
  */
 class ListPile {
+    
+    private $items;
 
-//    public function __construct($ID, $db, $table) {
-//        $this->makeList($ID, $db, $table);
-//    }
+    public function __construct($ID, $db, $table, $clause=null) {
+        $sql = ($clause == null) ? $db->query('SELECT id, item, itype FROM '.$table.' WHERE refID='.$ID) : $db->query('SELECT id, item, itype FROM '.$table.' WHERE refID='.$ID.' AND itype="'.$clause.'"');
+        $this->items = array();
+        $counter = 0;
+        while ($row = $sql->fetch_object()) {
+            $counter++;
+            $this->items[$counter] = (object) array ("item" => $row->item, "type" => $row->itype);
+        }
+        $this->items[0] = $counter;
+    }
 
     /**
-     * makeList creates an array of the details for a given reference id.
+     * makeList creates an array of the details for a given reference id, without needing ListPile initialized.
      *
      * Right now, it only works for Professional-subtypes, things with Eponyms.
      * [Education | Experience ]
@@ -26,11 +35,8 @@ class ListPile {
      * @param string $table
      * @return array $items
      */
-    public function makeList($ID, $db, $table, $clause=null) {
-        if ($clause == null)
-        $sql = $db->query('SELECT id, item, itype FROM '.$table.' WHERE refID='.$ID);
-        else
-        $sql = $db->query('SELECT id, item, itype FROM '.$table.' WHERE refID='.$ID.' AND '.$clause);
+    public static function makeList($ID, $db, $table, $clause=null) {
+        $sql = ($clause == null) ? $db->query('SELECT id, item, itype FROM '.$table.' WHERE refID='.$ID) : $db->query('SELECT id, item, itype FROM '.$table.' WHERE refID='.$ID.' AND itype="'.$clause.'"');
         $items = array();
         $counter = 0;
         while ($row = $sql->fetch_object()) {
@@ -39,6 +45,10 @@ class ListPile {
         }
         $items[0] = $counter;
         return $items;
+    }
+
+    public function getListItems() {
+        return $this->items;
     }
 
     /**
