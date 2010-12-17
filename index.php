@@ -17,14 +17,11 @@ $r = (object) array(
     'n'=>$n = new User($u, $db),
     'j'=>$j = new Experience($u, $db),
     'l'=>$l = new Education($u, $db),
-    'i'=>$i = new Interests($u, $db, 'listly'),
-//    $int = new ListPile()
+    'i'=>$i = new ListPile($u, $db, 'listly', '3'),
+    't'=>$t = ListPile::makeList($u, $db, 'listly', '3')
 );
 print_r($r);
 $details = $r->j->getDetails();
-//$interests = $r->i->getInterests();
-$int = $r->i->makeList($u, $db, 'listly', 'itype=3');
-
 
 echo '</pre>';
 
@@ -39,7 +36,8 @@ echo '</pre>';
     </head>
     <body>
         <?php
-            echo $r->i->detailsAsList($int);
+            echo $r->i->detailsAsList($i->getListItems());
+            
         ?>
     </body>
 </html>
