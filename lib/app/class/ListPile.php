@@ -25,10 +25,17 @@ class ListPile {
     }
 
     /**
+<<<<<<< HEAD
      * makeList creates an array of the details for a given reference id.
      *
      * Right now, it only works for Professional-subtypes, things with Eponyms.
      * [Education | Experience]
+=======
+     * makeList creates an array of the details for a given reference id, without needing ListPile initialized.
+     *
+     * Right now, it only works for Professional-subtypes, things with Eponyms.
+     * [Education | Experience ]
+>>>>>>> 9e0428c15e37c5397c2aa2d1af0e5cc5255ed89e
      *
      * @param int $ID
      * @param mysqli $db

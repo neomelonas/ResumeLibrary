@@ -11,6 +11,10 @@ function __autoload($class) { include_once (__DIR__."/lib/app/class/{$class}.php
 
 echo '<pre>';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9e0428c15e37c5397c2aa2d1af0e5cc5255ed89e
 $u = isset($_GET['u']) ? $_GET['u'] : 1;
 $r = (object) array(
     'n'=>$n = new User($u, $db),
@@ -19,8 +23,13 @@ $r = (object) array(
     'i'=>$i = new ListPile($u, $db, 'listly', '3'),
     't'=>$t = ListPile::makeList($u, $db, 'listly', '3')
 );
+<<<<<<< HEAD
 $details = $r->j->getDetails();
 print_r($r);
+=======
+print_r($r);
+$details = $r->j->getDetails();
+>>>>>>> 9e0428c15e37c5397c2aa2d1af0e5cc5255ed89e
 
 echo '</pre>';
 

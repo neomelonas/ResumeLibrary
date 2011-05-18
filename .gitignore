@@ -1,0 +1,5 @@
+index.php
+nbproject/*
+conf/*.php
+tests/*
+sql/*
